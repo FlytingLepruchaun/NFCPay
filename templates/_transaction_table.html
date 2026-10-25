@@ -1,0 +1,47 @@
+{% if transactions %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date (UTC)</th>
+                <th>Transaction ID</th>
+                {% if is_merchant_view %}
+                <th>Student</th>
+                {% else %}
+                <th>Merchant / Admin</th>
+                {% endif %}
+                <th>Type</th>
+                <th>Status</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ transaction.transaction_id }}</td>
+                <td>
+                    {% if is_merchant_view %}
+                        {{ transaction.student.student_id }}
+                    {% elif transaction.merchant %}
+                        {{ transaction.merchant.name }}
+                    {% elif transaction.admin %}
+                        {{ transaction.admin.name }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td><span class="type-pill">{{ transaction.transaction_type|replace('_', ' ')|title }}</span></td>
+                <td>
+                    {% set status_class = 'success' if transaction.status == 'success' else 'warning' if transaction.status in ['pending', 'processing'] else 'danger' %}
+                    <span class="status-pill {{ status_class }}">{{ transaction.status|capitalize }}</span>
+                </td>
+                <td>₹{{ "%.2f"|format(transaction.amount) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="empty-state">No recent transactions.</p>
+{% endif %}

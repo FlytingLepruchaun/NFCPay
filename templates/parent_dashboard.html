@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Parent Dashboard{% endblock %}
+{% block content %}
+    <div class="dashboard-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Parent overview</p>
+                <h1>Welcome, {{ parent.name }}</h1>
+            </div>
+            <span class="user-chip user-chip-strong">Linked student</span>
+        </header>
+
+        <section class="student-summary panel-strip">
+            <div>
+                <p class="panel-label">Student</p>
+                <h2>{{ student.name }}</h2>
+            </div>
+            <div class="student-meta">
+                <span>{{ student.student_id }}</span>
+            </div>
+        </section>
+
+        <div class="dashboard-stats">
+            <article class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Student Balance</span>
+                    <span class="stat-indicator neutral">Current</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(student.balance) }}</p>
+            </article>
+            <article class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Student Month Spending</span>
+                    <span class="stat-indicator warning">Monthly</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(spending) }}</p>
+            </article>
+        </div>
+
+        <section class="content-panel">
+            <div class="section-header">
+                <h2>Recent Transactions</h2>
+            </div>
+            {% include "_transaction_table.html" %}
+        </section>
+    </div>
+{% endblock %}

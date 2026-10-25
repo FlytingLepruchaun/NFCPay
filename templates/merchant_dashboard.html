@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Merchant Dashboard{% endblock %}
+{% block content %}
+    <div class="dashboard-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Merchant overview</p>
+                <h1>Welcome, {{ merchant.name }}</h1>
+            </div>
+            <span class="user-chip user-chip-strong">{{ merchant.merchant_id }}</span>
+        </header>
+
+        <div class="dashboard-stats">
+            <article class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Today's Sales</span>
+                    <span class="stat-indicator success">Live</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(today_sales) }}</p>
+            </article>
+            <article class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Month Sales</span>
+                    <span class="stat-indicator neutral">Current Month</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(month_sales) }}</p>
+            </article>
+        </div>
+
+        <div class="merchant-operations">
+            <section class="content-panel sales-panel" aria-labelledby="daily-sales-heading">
+                <div class="section-header">
+                    <h2 id="daily-sales-heading">Daily Sales</h2>
+                    <span class="subtle-label">This Month</span>
+                </div>
+                <div class="sales-chart" role="list">
+                    {% for day in daily_sales %}
+                    <div class="sales-chart-row" role="listitem">
+                        <span class="sales-chart-label">{{ day.label }}</span>
+                        <div class="sales-chart-track">
+                            <div class="sales-chart-bar" style="width: {{ day.width }}%"></div>
+                        </div>
+                        <span class="sales-chart-amount">₹{{ "%.2f"|format(day.amount) }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <aside class="content-panel quick-action-panel">
+                <div class="section-header compact-header">
+                    <h2>Payment flow</h2>
+                </div>
+                <p>Accept a new payment by tapping the student card on the reader.</p>
+                <a href="{{ url_for('routes.merchant_scan') }}" class="btn btn-primary action-button">Start scanner</a>
+            </aside>
+        </div>
+
+        <section class="content-panel" aria-labelledby="monthly-sales-heading">
+            <div class="section-header">
+                <h2 id="monthly-sales-heading">Monthly Sales</h2>
+                <span class="subtle-label">Last 12 Months</span>
+            </div>
+            <div class="sales-chart" role="list">
+                {% for month in monthly_sales %}
+                <div class="sales-chart-row" role="listitem">
+                    <span class="sales-chart-label">{{ month.label }}</span>
+                    <div class="sales-chart-track">
+                        <div class="sales-chart-bar" style="width: {{ month.width }}%"></div>
+                    </div>
+                    <span class="sales-chart-amount">₹{{ "%.2f"|format(month.amount) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="content-panel">
+            <div class="section-header">
+                <h2>Recent Transactions</h2>
+            </div>
+            {% with is_merchant_view=true %}
+                {% include "_transaction_table.html" %}
+            {% endwith %}
+        </section>
+    </div>
+{% endblock %}

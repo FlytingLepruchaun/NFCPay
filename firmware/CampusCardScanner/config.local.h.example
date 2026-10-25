@@ -1,0 +1,15 @@
+#pragma once
+
+#define WIFI_SSID "YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+#define MERCHANT_ID "merchant1"
+#define SERVER_URL "http://192.168.1.10:5000/api/card-scan"
+#define ALLOW_LOCAL_HTTP_FOR_DEVELOPMENT true
+#define CARD_SCAN_KEY_HEX "REPLACE_WITH_THE_64_HEX_CHAR_SERVER_KEY"
+
+// Development-only UID lookup. This is not a card-memory format.
+#define DEV_CARD_UID "04:A1:B2:C3"
+#define DEV_CARD_ROLL_NUMBER "STU001"
+
+// Production HTTPS configuration: set SERVER_URL to https://... and define
+// TLS_ROOT_CA_PEM as the trusted CA PEM string in config.local.h.

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+    <div class="dashboard-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Student account</p>
+                <h1>Welcome, {{ student.name }}</h1>
+            </div>
+            <span class="user-chip user-chip-strong">{{ student.student_id }}</span>
+        </header>
+
+        <div class="dashboard-stats">
+            <article class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Current Balance</span>
+                    <span class="stat-indicator success">Available</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(student.balance) }}</p>
+            </article>
+            <article class="stat-card">
+                <div class="stat-card-header">
+                        <span class="stat-label">Month Spending</span>
+                        <span class="stat-indicator neutral">This Month</span>
+                </div>
+                <p class="amount">₹{{ "%.2f"|format(spending) }}</p>
+            </article>
+        </div>
+
+        <section class="content-panel">
+            <div class="section-header">
+                    <h2>Recent Transactions</h2>
+            </div>
+            {% include "_transaction_table.html" %}
+        </section>
+    </div>
+{% endblock %}

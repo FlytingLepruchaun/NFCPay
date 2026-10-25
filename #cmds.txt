@@ -1,0 +1,10 @@
+run server:
+
+.\.venv\Scripts\python.exe migrations\run_migration.py
+.\.venv\Scripts\python.exe -m flask --app app run --host=0.0.0.0 --port=5000
+
+
+run NodeMCU:
+
+.\.venv\Scripts\python.exe -m platformio run --project-dir firmware\platformio --target upload
+.\.venv\Scripts\python.exe -m platformio device monitor --project-dir firmware\platformio --baud 115200

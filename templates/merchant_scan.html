@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Scan Card - Campus Payment System{% endblock %}
+{% block content %}
+<div class="dashboard-shell">
+    <div class="content-panel scan-panel text-center" data-session-poller>
+        <p class="eyebrow">Card reader</p>
+        <h1>Waiting for card scan</h1>
+        <p class="scan-subtitle">Please tap the student's card on the reader to begin payment.</p>
+        <p id="scan-status" class="scan-status" aria-live="polite"></p>
+
+        <div class="scanner-ring" role="status" aria-label="Loading">
+            <div class="scanner-core"></div>
+        </div>
+
+        <div class="scan-actions">
+            <a href="{{ url_for('routes.merchant_dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='merchant_scan.js') }}" defer></script>
+{% endblock %}
